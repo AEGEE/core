@@ -5,6 +5,7 @@ const constants = require('../lib/constants');
 const helpers = require('../lib/helpers');
 const errors = require('../lib/errors');
 const mailer = require('../lib/mailer');
+const superagent = require('superagent');
 const { sequelize, Sequelize } = require('../lib/sequelize');
 
 exports.listAllUsers = async (req, res) => {
@@ -63,6 +64,17 @@ exports.updateUser = async (req, res) => {
     }
 
     await req.currentUser.update(req.body, { fields: constants.FIELDS_TO_UPDATE.USER.UPDATE });
+
+    if(req.body.first_name || req.body.last_name){
+      const payload = {
+        'name': {
+          'givenName': req.body.first_name || req.currentUser.first_name,
+          'familyName':  req.body.last_name || req.currentUser.last_name
+        }
+      }
+      await superagent.put('gsuite-wrapper:8084/accounts/'+req.currentUser.gsuite_id, payload );
+    }
+
     return res.json({
         success: true,
         data: req.currentUser
@@ -73,7 +85,7 @@ exports.deleteUser = async (req, res) => {
     if (!req.permissions.hasPermission('delete:member')) {
         return errors.makeForbiddenError(res, 'Permission delete:member is required, but not present.');
     }
-
+    await superagent.delete('gsuite-wrapper:8084/accounts/'+req.currentUser.gsuite_id);
     await req.currentUser.destroy();
     return res.json({
         success: true,
@@ -93,6 +105,7 @@ exports.setUserPassword = async (req, res) => {
     }
 
     await userWithPassword.update({ password: req.body.password });
+    //await superagent.post('gsuite-wrapper:8084/accounts?SETPASS')
 
     // TODO: add a mail that the password was changed.
 
@@ -108,6 +121,9 @@ exports.setUserActive = async (req, res) => {
     }
 
     await req.currentUser.update({ active: req.body.active });
+
+    await superagent.put('gsuite-wrapper:8084/accounts/'+req.currentUser.gsuite_id, { 'suspended': req.body.active} );
+
     return res.json({
         success: true,
         data: req.currentUser
@@ -120,6 +136,9 @@ exports.confirmUser = async (req, res) => {
     }
 
     await req.currentUser.update({ mail_confirmed_at: new Date() });
+
+    await superagent.put('gsuite-wrapper:8084/accounts/'+req.currentUser.gsuite_id, { 'suspended': false } );
+
     return res.json({
         success: true,
         data: req.currentUser
@@ -142,8 +161,12 @@ exports.setPrimaryBody = async (req, res) => {
         }
 
         await req.currentUser.update({ primary_body_id: body.id });
+        //await superagent.post('gsuite-wrapper:8084/accounts?DEPARTMENT')
+        //await superagent.post('gsuite-wrapper:8084/groups?DEPARTMENT')
     } else {
         await req.currentUser.update({ primary_body_id: null });
+        //await superagent.post('gsuite-wrapper:8084/accounts?DEPARTMENT')
+        //await superagent.post('gsuite-wrapper:8084/groups?DEPARTMENT')
     }
 
     return res.json({
@@ -209,6 +232,7 @@ exports.confirmEmailChange = async (req, res) => {
     await sequelize.transaction(async (t) => {
         await mailChange.user.update({ email: mailChange.new_email }, { transaction: t });
         await mailChange.destroy({ transaction: t });
+        await superagent.put('gsuite-wrapper:8084/accounts/'+req.currentUser.gsuite_id, { 'secondaryEmail': mailChange.new_email} );
     });
 
     return res.json({
