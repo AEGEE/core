@@ -180,7 +180,7 @@ describe('Bodies editing', () => {
             expect(res.body).not.toHaveProperty('data');
             expect(res.body).toHaveProperty('message');
         });
-    };
+    }
 
     for (const type of ['interest group', 'working group', 'commission', 'committee', 'project', 'partner', 'other']) {
         test(`should succeed when foundation date is empty on ${type}`, async () => {
@@ -203,5 +203,5 @@ describe('Bodies editing', () => {
             expect(res.body).not.toHaveProperty('errors');
             expect(res.body).toHaveProperty('data');
         });
-    };
+    }
 });
