@@ -52,7 +52,7 @@ exports.createBody = async (req, res) => {
         return errors.makeForbiddenError(res, 'Permission global:create:body is required, but not present.');
     }
 
-    if (['antenna', 'contact antenna', 'contact'].includes(req.body.type) && req.body.founded_at === null) {
+    if (['antenna', 'contact antenna', 'contact'].includes(req.body.type) && (!req.body.founded_at || req.body.founded_at === null)) {
         return errors.makeValidationError(res, 'Foundation date needs to be set.');
     }
 
