@@ -85,8 +85,8 @@ const Body = sequelize.define('body', {
     },
     founded_at: {
         type: Sequelize.DATEONLY,
-        allowNull: false,
-        defaultValue: Sequelize.fn('NOW')
+        allowNull: true,
+        defaultValue: null
     },
     status: {
         type: Sequelize.ENUM('active', 'deleted'),

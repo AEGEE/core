@@ -52,6 +52,10 @@ exports.createBody = async (req, res) => {
         return errors.makeForbiddenError(res, 'Permission global:create:body is required, but not present.');
     }
 
+    if (['antenna', 'contact antenna', 'contact'].includes(req.body.type) && req.body.founded_at === null) { 
+        return errors.makeValidationError(res, 'Foundation date needs to be set.');
+    }
+
     // TODO: filter out fields that are changed in the other way
     const body = await Body.create(req.body);
     return res.json({
@@ -63,6 +67,10 @@ exports.createBody = async (req, res) => {
 exports.updateBody = async (req, res) => {
     if (!req.permissions.hasPermission('update:body')) {
         return errors.makeForbiddenError(res, 'Permission update:body is required, but not present.');
+    }
+
+    if (['antenna', 'contact antenna', 'contact'].includes(req.currentBody.type) && req.body.founded_at === null) { 
+        return errors.makeValidationError(res, 'Foundation date needs to be set.');
     }
 
     await req.currentBody.update(req.body, { fields: req.permissions.getPermissionFilters('update:body') });
