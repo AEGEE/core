@@ -97,7 +97,8 @@ describe('Bodies creating', () => {
             expect(res.statusCode).toEqual(422);
             expect(res.body.success).toEqual(false);
             expect(res.body).not.toHaveProperty('data');
-            expect(res.body).toHaveProperty('message');
+            expect(res.body).toHaveProperty('errors');
+            expect(res.body.errors).toHaveProperty('founded_at');
         });
     }
 

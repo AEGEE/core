@@ -86,7 +86,14 @@ const Body = sequelize.define('body', {
     founded_at: {
         type: Sequelize.DATEONLY,
         allowNull: true,
-        defaultValue: null
+        defaultValue: null,
+        validate: {
+            isValid(value) {
+                if (['antenna', 'contact antenna', 'contact'].includes(this.type) && value === null) {
+                    throw new Error('Foundation date should be set');
+                }
+            }
+        }
     },
     status: {
         type: Sequelize.ENUM('active', 'deleted'),
