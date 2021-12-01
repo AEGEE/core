@@ -6,23 +6,23 @@
   "author": "Sergey Peshkov",
   "license": "ISC",
   "devDependencies": {
-    "@commitlint/cli": "^14.1.0",
-    "@commitlint/config-conventional": "^14.1.0",
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
     "conventional-changelog": "^3.1.24",
-    "eslint": "^8.2.0",
+    "eslint": "^8.3.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "faker": "^5.5.3",
     "husky": "^7.0.4",
-    "jest": "^27.3.1",
+    "jest": "^27.4.3",
     "jest-junit": "^13.0.0",
-    "lint-staged": "^11.2.6",
+    "lint-staged": "^12.1.2",
     "nock": "^13.2.1",
     "nyc": "^15.1.0",
     "open-cli": "^7.0.1",
-    "semantic-release": "^18.0.0"
+    "semantic-release": "^18.0.1"
   },
   "scripts": {
     "test": "NODE_ENV=test npm run db:setup && jest test/**/*.test.js --runInBand --forceExit",
@@ -63,12 +63,12 @@
     ]
   },
   "dependencies": {
-    "@bugsnag/js": "^7.13.3",
+    "@bugsnag/js": "^7.14.1",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "bunyan": "^1.8.15",
     "express": "^4.17.1",
-    "express-promise-router": "^4.1.0",
+    "express-promise-router": "^4.1.1",
     "express-query-boolean": "^2.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
@@ -79,7 +79,7 @@
     "prom-client": "^14.0.1",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
-    "sequelize": "^6.9.0",
+    "sequelize": "^6.11.0",
     "sequelize-cli": "^6.3.0"
   }
 }
