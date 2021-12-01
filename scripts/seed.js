@@ -807,12 +807,6 @@ async function createPermissions() {
             object: 'member',
             scope: 'global',
             description: 'Allows to add or remove superadmin powers to any user in the system'
-        },
-        {
-            action: 'update_superadmin',
-            object: 'member',
-            scope: 'local',
-            description: 'Allows to add or remove superadmin powers to users that are member in the body that you got this permission from'
         }
     ], { individualHooks: true, validate: true });
 

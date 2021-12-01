@@ -174,8 +174,8 @@ exports.setUserActive = async (req, res) => {
 };
 
 exports.setUserSuperadmin = async (req, res) => {
-    if (!req.permissions.hasPermission('update_superadmin:member')) {
-        return errors.makeForbiddenError(res, 'Permission update_superadmin:member is required, but not present.');
+    if (!req.permissions.hasPermission('global:update_superadmin:member')) {
+        return errors.makeForbiddenError(res, 'Permission global:update_superadmin:member is required, but not present.');
     }
 
     await req.currentUser.update({ superadmin: req.body.superadmin });
