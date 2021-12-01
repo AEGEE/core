@@ -58,7 +58,7 @@ describe('User superadmin', () => {
         const user = await generator.createUser({ superadmin: true });
         const token = await generator.createAccessToken({}, user);
 
-        await generator.createPermission({ scope: 'local', action: 'update_superadmin', object: 'member' });
+        await generator.createPermission({ scope: 'global', action: 'update_superadmin', object: 'member' });
 
         const res = await request({
             uri: '/members/' + user.id + '/superadmin',
@@ -71,7 +71,7 @@ describe('User superadmin', () => {
         expect(res.body.success).toEqual(true);
         expect(res.body).not.toHaveProperty('errors');
         expect(res.body).toHaveProperty('data');
-        expect(res.body.data.supeardmin).toEqual(false);
+        expect(res.body.data.superadmin).toEqual(false);
     });
 
     test('should fail for yourself without permission', async () => {
