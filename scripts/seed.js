@@ -62,7 +62,6 @@ async function createBodies() {
             type: typeLowerCase,
             phone: '1-800-111-11-11',
             address: 'Somewhere in Europe',
-            founded_at: '1970-01-01',
             email: typeLowerCase.replace(' ', '') + '@example.com'
         }));
     }
