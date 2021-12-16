@@ -7,9 +7,9 @@ RUN mkdir -p /usr/app/src \
 
 COPY ./docker/core/bootstrap.sh /usr/app/scripts/bootstrap.sh
 COPY . /usr/app/src
-RUN mkdir /usr/app/src/state
 
-RUN chown -R node:node /usr/app
+RUN mkdir /usr/app/src/state \
+	&& chown -R node:node /usr/app
 
 WORKDIR /usr/app/src
 
