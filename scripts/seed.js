@@ -51,14 +51,27 @@ async function createBodies() {
         'Other'
     ];
 
+    const codes = [
+        'ANT',
+        'COA',
+        'CON',
+        'INT',
+        'WRK',
+        'COS',
+        'COT',
+        'PRO',
+        'PAR',
+        'OTH'
+    ];
+
     const bodies = [];
 
-    for (const type of types) {
-        const typeLowerCase = type.toLowerCase();
+    for (let i = 0; i < types.length; i++) {
+        const typeLowerCase = types[i].toLowerCase();
         bodies.push(await Body.create({
-            name: 'AEGEE-' + type,
-            code: type.toUpperCase().replace(' ', '-'),
-            description: type,
+            name: 'AEGEE-' + types[i],
+            code: codes[i],
+            description: types[i],
             type: typeLowerCase,
             phone: '1-800-111-11-11',
             address: 'Somewhere in Europe',

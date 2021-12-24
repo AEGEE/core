@@ -26,6 +26,39 @@ describe('Bodies testing', () => {
         }
     });
 
+    test('should fail with alphaNumeric body_code', async () => {
+        try {
+            await generator.createBody({ code: 'Ts3' });
+            expect(1).toEqual(0);
+        } catch (err) {
+            expect(err).toHaveProperty('errors');
+            expect(err.errors.length).toEqual(1);
+            expect(err.errors[0].path).toEqual('code');
+        }
+    });
+
+    test('should fail with too long body_code', async () => {
+        try {
+            await generator.createBody({ code: 'testtest' });
+            expect(1).toEqual(0);
+        } catch (err) {
+            expect(err).toHaveProperty('errors');
+            expect(err.errors.length).toEqual(1);
+            expect(err.errors[0].path).toEqual('code');
+        }
+    });
+
+    test('should fail with too short body_code', async () => {
+        try {
+            await generator.createBody({ code: 'ts' });
+            expect(1).toEqual(0);
+        } catch (err) {
+            expect(err).toHaveProperty('errors');
+            expect(err.errors.length).toEqual(1);
+            expect(err.errors[0].path).toEqual('code');
+        }
+    });
+
     test('should fail with not set body_code', async () => {
         try {
             const body = generator.generateBody();
