@@ -69,7 +69,7 @@ describe('Bodies testing', () => {
             expect(1).toEqual(0);
         } catch (err) {
             expect(err).toHaveProperty('errors');
-            expect(err.errors.length).toEqual(1);
+            expect(err.errors.length).toEqual(3);
             expect(err.errors[0].path).toEqual('code');
         }
     });
@@ -114,12 +114,12 @@ describe('Bodies testing', () => {
 
     test('should normalize fields', async () => {
         const data = generator.generateBody({
-            code: '\t\t\ttest\t\t\t',
+            code: '\t\t\ttet\t\t\t',
             email: '  \t test@TeSt.Io\t  \t',
         });
 
         const body = await Body.create(data);
-        expect(body.code).toEqual('TEST');
+        expect(body.code).toEqual('TET');
         expect(body.email).toEqual('test@test.io');
     });
 });
