@@ -65,6 +65,7 @@ async function createBodies() {
     ];
 
     const bodies = [];
+
     types.forEach(async (type, i) => {
         const typeLowerCase = type.toLowerCase();
         bodies.push(await Body.create({
