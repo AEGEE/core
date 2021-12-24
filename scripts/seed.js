@@ -65,21 +65,19 @@ async function createBodies() {
     ];
 
     const bodies = [];
-
-    for (let i = 0; i < types.length; i++) {
-        const typeLowerCase = types[i].toLowerCase();
+    types.forEach(async (type, i) => {
+        const typeLowerCase = type.toLowerCase();
         bodies.push(await Body.create({
-            name: 'AEGEE-' + types[i],
+            name: 'AEGEE-' + type,
             code: codes[i],
-            description: types[i],
+            description: type,
             type: typeLowerCase,
             phone: '1-800-111-11-11',
             address: 'Somewhere in Europe',
             founded_at: '1970-01-01',
             email: typeLowerCase.replace(' ', '') + '@example.com'
         }));
-    }
-
+    });
     return bodies;
 }
 
