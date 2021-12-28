@@ -18,7 +18,7 @@ const JoinRequest = sequelize.define('join_request', {
         validate: {
             isIn: {
                 args: [['pending', 'approved']],
-                msg: 'Status should be one of these: "pending", "approved".'
+                msg: 'Status must be one of these: "pending", "approved".'
             }
         }
     },

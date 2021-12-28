@@ -6,7 +6,7 @@ const Circle = sequelize.define('circle', {
         allowNull: false,
         defaultValue: '',
         validate: {
-            notEmpty: { msg: 'Name should be set.' },
+            notEmpty: { msg: 'Name must be set.' },
         }
     },
     description: {
@@ -14,14 +14,14 @@ const Circle = sequelize.define('circle', {
         allowNull: false,
         defaultValue: '',
         validate: {
-            notEmpty: { msg: 'Description should be set.' },
+            notEmpty: { msg: 'Description must be set.' },
         },
     },
     gsuite_id: {
         type: Sequelize.STRING,
         allowNull: true,
         validate: {
-            isEmail: { msg: 'GSuite ID should be a valid email.' }
+            isEmail: { msg: 'GSuite ID must be a valid email.' }
         },
         unique: true
     }

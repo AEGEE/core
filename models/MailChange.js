@@ -14,8 +14,8 @@ const MailChange = sequelize.define('mail_change', {
         type: Sequelize.TEXT,
         allowNull: false,
         validate: {
-            notNull: { msg: 'Value should be set.' },
-            notEmpty: { msg: 'Value should be set.' },
+            notNull: { msg: 'Value must be set.' },
+            notEmpty: { msg: 'Value must be set.' },
         },
         unique: true
     },
@@ -23,9 +23,9 @@ const MailChange = sequelize.define('mail_change', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'New email should be set.' },
-            notNull: { msg: 'New email should be set.' },
-            isEmail: { msg: 'New email should be valid.' },
+            notEmpty: { msg: 'New email must be set.' },
+            notNull: { msg: 'New email must be set.' },
+            isEmail: { msg: 'New email must be valid.' },
             isValid(value) {
                 if (constants.RESTRICTED_EMAILS.some((email) => value.includes(email))) {
                     throw new Error('Email can not be in one of the following domains: ' + constants.RESTRICTED_EMAILS.join(', ').trim() + '.');

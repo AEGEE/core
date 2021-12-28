@@ -13,14 +13,14 @@ const User = sequelize.define('user', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'Username should be set.' },
-            notNull: { msg: 'Username should be set.' },
+            notEmpty: { msg: 'Username must be set.' },
+            notNull: { msg: 'Username must be set.' },
             isValid(value) {
                 if (!USERNAME_REGEX.test(value)) {
-                    throw new Error('Username should only contain letters, numbers, dots, underscores and dashes.');
+                    throw new Error('Username must only contain letters, numbers, dots, underscores and dashes.');
                 }
                 if (value.match(/^[0-9._-]+$/)) {
-                    throw new Error('Username should have at least 1 letter.');
+                    throw new Error('Username must have at least 1 letter.');
                 }
             }
         },
@@ -30,9 +30,9 @@ const User = sequelize.define('user', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'Email should be set.' },
-            notNull: { msg: 'Email should be set.' },
-            isEmail: { msg: 'Email should be valid.' },
+            notEmpty: { msg: 'Email must be set.' },
+            notNull: { msg: 'Email must be set.' },
+            isEmail: { msg: 'Email must be valid.' },
             isValid(value) {
                 if (constants.RESTRICTED_EMAILS.some((email) => value.includes(email))) {
                     throw new Error('Email can not be in one of the following domains: ' + constants.RESTRICTED_EMAILS.join(', ').trim() + '.');
@@ -45,9 +45,9 @@ const User = sequelize.define('user', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notNull: { msg: 'Password should be set.' },
-            notEmpty: { msg: 'Password should be set.' },
-            len: { args: [8], msg: 'Password should be at least 8 characters long.' }
+            notNull: { msg: 'Password must be set.' },
+            notEmpty: { msg: 'Password must be set.' },
+            len: { args: [8], msg: 'Password must be at least 8 characters long.' }
         }
     },
     mail_confirmed_at: {
@@ -59,7 +59,7 @@ const User = sequelize.define('user', {
         allowNull: false,
         defaultValue: true,
         validate: {
-            isBoolean: { msg: 'Active should be valid.' }
+            isBoolean: { msg: 'Active must be valid.' }
         }
     },
     superadmin: {
@@ -67,7 +67,7 @@ const User = sequelize.define('user', {
         allowNull: false,
         defaultValue: false,
         validate: {
-            isBoolean: { msg: 'Superadmin should be valid.' }
+            isBoolean: { msg: 'Superadmin must be valid.' }
         }
     },
     privacy_consent: {
@@ -78,11 +78,11 @@ const User = sequelize.define('user', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'First name should be set.' },
-            notNull: { msg: 'First name should be set.' },
+            notEmpty: { msg: 'First name must be set.' },
+            notNull: { msg: 'First name must be set.' },
             isValid(value) {
                 if (!NAME_REGEX.test(value)) {
-                    throw new Error(`First name should only contain letters, spaces and dashes, got "${value}".`);
+                    throw new Error(`First name must only contain letters, spaces and dashes, got "${value}".`);
                 }
             }
         }
@@ -91,11 +91,11 @@ const User = sequelize.define('user', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'Last name should be set.' },
-            notNull: { msg: 'Last name should be set.' },
+            notEmpty: { msg: 'Last name must be set.' },
+            notNull: { msg: 'Last name must be set.' },
             isValid(value) {
                 if (!NAME_REGEX.test(value)) {
-                    throw new Error(`Last name should only contain letters, spaces and dashes, got "${value}".`);
+                    throw new Error(`Last name must only contain letters, spaces and dashes, got "${value}".`);
                 }
             }
         }
@@ -110,7 +110,7 @@ const User = sequelize.define('user', {
                 }
 
                 if (moment().isSameOrBefore(value)) {
-                    throw new Error('Birthday should be in the past.');
+                    throw new Error('Birthday must be in the past.');
                 }
             }
         }
@@ -161,7 +161,7 @@ const User = sequelize.define('user', {
         type: Sequelize.STRING,
         allowNull: true,
         validate: {
-            isEmail: { msg: 'GSuite ID should be a valid email.' }
+            isEmail: { msg: 'GSuite ID must be a valid email.' }
         },
         unique: true
     }

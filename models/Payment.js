@@ -8,8 +8,8 @@ const Payment = sequelize.define('payment', {
         allowNull: false,
         defaultValue: '',
         validate: {
-            notEmpty: { msg: 'Starts date should be set.' },
-            isDate: { msg: 'Starts date should be valid.' }
+            notEmpty: { msg: 'Starts date must be set.' },
+            isDate: { msg: 'Starts date must be valid.' }
         }
     },
     expires: {
@@ -17,11 +17,11 @@ const Payment = sequelize.define('payment', {
         allowNull: false,
         defaultValue: '',
         validate: {
-            notEmpty: { msg: 'Expiration date should be set.' },
-            isDate: { msg: 'Expiration date should be valid.' },
+            notEmpty: { msg: 'Expiration date must be set.' },
+            isDate: { msg: 'Expiration date must be valid.' },
             laterThanStarts(val) {
                 if (moment(val).isSameOrBefore(this.starts)) {
-                    throw new Error('Expiration date should be after the start date.');
+                    throw new Error('Expiration date must be after the start date.');
                 }
             },
         }
@@ -31,8 +31,8 @@ const Payment = sequelize.define('payment', {
         allowNull: false,
         defaultValue: '',
         validate: {
-            notEmpty: { msg: 'Amount should be set.' },
-            isDecimal: { msg: 'Amount should be valid.' },
+            notEmpty: { msg: 'Amount must be set.' },
+            isDecimal: { msg: 'Amount must be valid.' },
             min: { args: [0], msg: 'Amount cannot be negative.' }
         }
     },
@@ -40,7 +40,7 @@ const Payment = sequelize.define('payment', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'Currency should be set.' }
+            notEmpty: { msg: 'Currency must be set.' }
         }
     },
     comment: {

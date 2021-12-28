@@ -5,16 +5,16 @@ const Campaign = sequelize.define('campaign', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'Name should be set.' },
-            notNull: { msg: 'Name should be set.' }
+            notEmpty: { msg: 'Name must be set.' },
+            notNull: { msg: 'Name must be set.' }
         }
     },
     url: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'URL should be set.' },
-            notNull: { msg: 'URL should be set.' }
+            notEmpty: { msg: 'URL must be set.' },
+            notNull: { msg: 'URL must be set.' }
         },
         unique: true
     },
@@ -27,15 +27,15 @@ const Campaign = sequelize.define('campaign', {
         type: Sequelize.TEXT,
         allowNull: true,
         validate: {
-            notEmpty: { msg: 'Description should be set.' }
+            notEmpty: { msg: 'Description must be set.' }
         }
     },
     description_long: {
         type: Sequelize.TEXT,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'Description should be set.' },
-            notNull: { msg: 'Description should be set.' }
+            notEmpty: { msg: 'Description must be set.' },
+            notNull: { msg: 'Description must be set.' }
         }
     },
     activate_user: {

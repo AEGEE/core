@@ -12,7 +12,7 @@ const RefreshToken = sequelize.define('refresh_token', {
         allowNull: false,
         defaultValue: '',
         validate: {
-            notEmpty: { msg: 'Value should be set.' },
+            notEmpty: { msg: 'Value must be set.' },
         },
         unique: true
     }

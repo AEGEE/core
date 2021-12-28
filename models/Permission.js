@@ -5,10 +5,10 @@ const Permission = sequelize.define('permission', {
         type: Sequelize.ENUM('global', 'global'),
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'Scope should be set.' },
+            notEmpty: { msg: 'Scope must be set.' },
             isIn: {
                 args: [['global', 'local', 'join_request']],
-                msg: 'Permission scope should be one of these: "global", "local", "join_request.'
+                msg: 'Permission scope must be one of these: "global", "local", "join_request.'
             }
         },
         unique: { args: true, msg: 'There\'s already a permission with such scope, action and object.' }
@@ -17,8 +17,8 @@ const Permission = sequelize.define('permission', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'Action should be set.' },
-            notNull: { msg: 'Action should be set.' }
+            notEmpty: { msg: 'Action must be set.' },
+            notNull: { msg: 'Action must be set.' }
         },
         unique: { args: true, msg: 'There\'s already a permission with such scope, action and object.' }
     },
@@ -26,8 +26,8 @@ const Permission = sequelize.define('permission', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'Object should be set.' },
-            notNull: { msg: 'Object should be set.' }
+            notEmpty: { msg: 'Object must be set.' },
+            notNull: { msg: 'Object must be set.' }
         },
         unique: { args: true, msg: 'There\'s already a permission with such scope, action and object.' }
     },
@@ -39,8 +39,8 @@ const Permission = sequelize.define('permission', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: { msg: 'Description should be set.' },
-            notNull: { msg: 'Description should be set.' }
+            notEmpty: { msg: 'Description must be set.' },
+            notNull: { msg: 'Description must be set.' }
         },
     },
     filters: {
