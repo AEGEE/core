@@ -74,7 +74,7 @@ describe('Bodies testing', () => {
         }
     });
 
-    test('should fail with null email', async () => {
+    test('should fail with null email and body active', async () => {
         try {
             await generator.createBody({ email: null });
             expect(1).toEqual(0);
@@ -83,6 +83,14 @@ describe('Bodies testing', () => {
             expect(err.errors.length).toEqual(1);
             expect(err.errors[0].path).toEqual('email');
         }
+    });
+
+    test('should succeed with null email and body deleted', async () => {
+        const data = generator.generateBody({ email: null, status: 'deleted' });
+        delete data.email;
+
+        const body = await Body.create(data);
+        expect(body.email).toBeNull();
     });
 
     test('should fail with invalid email', async () => {
@@ -96,7 +104,7 @@ describe('Bodies testing', () => {
         }
     });
 
-    test('should fail with not set email', async () => {
+    test('should fail with not set email and body active', async () => {
         try {
             const body = generator.generateBody();
             delete body.email;
@@ -109,6 +117,14 @@ describe('Bodies testing', () => {
             expect(err.errors.length).toEqual(1);
             expect(err.errors[0].path).toEqual('email');
         }
+    });
+
+    test('should succeed with not set email and body deleted', async () => {
+        const data = generator.generateBody({ status: 'deleted' });
+        delete data.email;
+
+        const body = await Body.create(data);
+        expect(body.email).toBeNull();
     });
 
     test('should normalize fields', async () => {

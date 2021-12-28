@@ -61,6 +61,8 @@ exports.generateBody = (options = {}) => {
     if (notSet(options.phone)) options.phone = faker.phone.phoneNumber();
     if (notSet(options.address)) options.address = faker.lorem.paragraph();
     if (notSet(options.founded_at)) options.founded_at = faker.date.past();
+    if (notSet(options.status)) options.status = 'active';
+    if (notSet(options.type)) options.type = 'other';
 
     return options;
 };

@@ -17,8 +17,7 @@ const Body = sequelize.define('body', {
     },
     task_description: {
         type: Sequelize.TEXT,
-        allowNull: true,
-        defaultValue: ''
+        allowNull: true
     },
     code: {
         type: Sequelize.STRING,
@@ -37,25 +36,23 @@ const Body = sequelize.define('body', {
     },
     email: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
-            notEmpty: { msg: 'Email must be set.' },
+            isValid(value) {
+                if ((value === null || value === undefined) && this.status !== 'deleted') {
+                    throw new Error('Email must be set.');
+                }
+            },
             isEmail: { msg: 'Email must be valid.' }
         }
     },
     phone: {
         type: Sequelize.STRING,
-        allowNull: true,
-        validate: {
-            notEmpty: { msg: 'Phone must be set.' },
-        }
+        allowNull: true
     },
     address: {
         type: Sequelize.TEXT,
-        allowNull: true,
-        validate: {
-            notEmpty: { msg: 'Address must be set.' },
-        }
+        allowNull: true
     },
     postal_address: {
         type: Sequelize.TEXT,
@@ -64,8 +61,8 @@ const Body = sequelize.define('body', {
     type: {
         type: Sequelize.ENUM('antenna', 'contact antenna', 'contact', 'interest group', 'working group', 'commission', 'committee', 'project', 'partner', 'other'),
         allowNull: false,
-        defaultValue: 'antenna',
         validate: {
+            notEmpty: { msg: 'Type must be set.' },
             isIn: {
                 args: [['antenna', 'contact antenna', 'contact', 'interest group', 'working group', 'commission', 'committee', 'project', 'partner', 'other']],
                 msg: 'Type must be one of these: "antenna", "contact antenna", "contact", "interest group", "working group", "commission", "committee", "project", "partner", "other".'
@@ -84,7 +81,6 @@ const Body = sequelize.define('body', {
     founded_at: {
         type: Sequelize.DATEONLY,
         allowNull: true,
-        defaultValue: null,
         validate: {
             isValid(value) {
                 if (['antenna', 'contact antenna', 'contact'].includes(this.type) && value === null) {
@@ -110,7 +106,10 @@ const Body = sequelize.define('body', {
     },
     website: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
+        validate: {
+            isUrl: { msg: 'Website must be a valid URL.' }
+        }
     },
     gsuite_id: {
         type: Sequelize.STRING,
