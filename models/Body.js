@@ -17,8 +17,7 @@ const Body = sequelize.define('body', {
     },
     task_description: {
         type: Sequelize.TEXT,
-        allowNull: true,
-        defaultValue: ''
+        allowNull: true
     },
     code: {
         type: Sequelize.STRING,
@@ -84,7 +83,6 @@ const Body = sequelize.define('body', {
     founded_at: {
         type: Sequelize.DATEONLY,
         allowNull: true,
-        defaultValue: null,
         validate: {
             isValid(value) {
                 if (['antenna', 'contact antenna', 'contact'].includes(this.type) && value === null) {

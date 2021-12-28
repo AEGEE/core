@@ -4,7 +4,6 @@ const Circle = sequelize.define('circle', {
     name: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: '',
         validate: {
             notEmpty: { msg: 'Name must be set.' },
         }
@@ -12,7 +11,6 @@ const Circle = sequelize.define('circle', {
     description: {
         type: Sequelize.TEXT,
         allowNull: false,
-        defaultValue: '',
         validate: {
             notEmpty: { msg: 'Description must be set.' },
         },

@@ -14,7 +14,6 @@ const MailConfirmation = sequelize.define('mail_confirmation', {
     value: {
         type: Sequelize.TEXT,
         allowNull: false,
-        defaultValue: '',
         validate: {
             notEmpty: { msg: 'Value must be set.' },
         }
@@ -22,7 +21,6 @@ const MailConfirmation = sequelize.define('mail_confirmation', {
     expires_at: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: '',
         validate: {
             notEmpty: { msg: 'Expires must be set.' },
         }

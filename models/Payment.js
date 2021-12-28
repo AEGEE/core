@@ -6,7 +6,6 @@ const Payment = sequelize.define('payment', {
     starts: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        defaultValue: '',
         validate: {
             notEmpty: { msg: 'Starts date must be set.' },
             isDate: { msg: 'Starts date must be valid.' }
@@ -15,7 +14,6 @@ const Payment = sequelize.define('payment', {
     expires: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        defaultValue: '',
         validate: {
             notEmpty: { msg: 'Expiration date must be set.' },
             isDate: { msg: 'Expiration date must be valid.' },
@@ -29,7 +27,6 @@ const Payment = sequelize.define('payment', {
     amount: {
         type: Sequelize.DECIMAL,
         allowNull: false,
-        defaultValue: '',
         validate: {
             notEmpty: { msg: 'Amount must be set.' },
             isDecimal: { msg: 'Amount must be valid.' },

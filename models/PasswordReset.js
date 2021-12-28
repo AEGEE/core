@@ -13,7 +13,6 @@ const PasswordReset = sequelize.define('password_reset', {
     value: {
         type: Sequelize.TEXT,
         allowNull: false,
-        defaultValue: '',
         validate: {
             notEmpty: { msg: 'Value must be set.' },
         },

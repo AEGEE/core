@@ -117,23 +117,19 @@ const User = sequelize.define('user', {
     },
     gender: {
         type: Sequelize.STRING,
-        allowNull: true,
-        defaultValue: ''
+        allowNull: true
     },
     phone: {
         type: Sequelize.STRING,
-        allowNull: true,
-        defaultValue: ''
+        allowNull: true
     },
     address: {
         type: Sequelize.TEXT,
-        allowNull: true,
-        defaultValue: ''
+        allowNull: true
     },
     about_me: {
         type: Sequelize.TEXT,
-        allowNull: true,
-        defaultValue: ''
+        allowNull: true
     },
     primary_email: {
         type: Sequelize.ENUM('personal', 'gsuite'),
