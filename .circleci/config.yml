@@ -222,7 +222,7 @@ workflows:
       - yamllint
       - shellcheck
       - docker/hadolint:
-          dockerfiles: $(find . --name '*Dockerfile*')
+          dockerfiles: ~/docker/core/Dockerfile
   build:
     jobs:
       - build:
