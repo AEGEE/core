@@ -41,7 +41,7 @@ jobs:
           command: NODE_ENV=test npm run db:recreate
   build:
     docker:
-      - image: cimg/base:2022.08
+      - image: cimg/base:2022.07
     steps:
       - checkout
       - setup_remote_docker:
@@ -222,7 +222,7 @@ workflows:
       - yamllint
       - shellcheck
       - docker/hadolint:
-          dockerfiles: $(find . -name '*Dockerfile*')
+          dockerfiles: $(find . --name '*Dockerfile*')
   build:
     jobs:
       - build:
