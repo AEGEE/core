@@ -29,7 +29,7 @@ jobs:
           path: ~/reports
   db-recreate:
     docker:
-      - image: cimg/node:18.7.0.
+      - image: cimg/node:18.7.0
       - image: cimg/postgres:10.21
         environment:
           POSTGRES_PASSWORD: config.test.postgres.password
@@ -45,7 +45,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.17
+          version: 20.10.16
       - run: docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml build --no-cache core
   eslint:
     docker:
