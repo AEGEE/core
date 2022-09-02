@@ -1,6 +1,6 @@
 orbs:
   codecov: codecov/codecov@3.2.3
-  docker: circleci/docker@2.1.2
+  docker: circleci/docker@1.6.0
   node: circleci/node@5.0.2
   shellcheck: circleci/shellcheck@3.1.1
   slack: circleci/slack@4.10.1
@@ -41,11 +41,11 @@ jobs:
           command: NODE_ENV=test npm run db:recreate
   build:
     docker:
-      - image: cimg/base:2022.07
+      - image: cimg/base:2021.10
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.16
+          version: 20.10.7
       - run: docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml build --no-cache core
   eslint:
     docker:
@@ -222,7 +222,7 @@ workflows:
       - yamllint
       - shellcheck
       - docker/hadolint:
-          dockerfiles: ~/docker/core/Dockerfile
+          dockerfiles: $(find . -name '*Dockerfile*')
   build:
     jobs:
       - build:
