@@ -93,6 +93,11 @@ async function createCircles() {
         description: 'Parent board circle'
     });
 
+    circles.otherBoardCircle = await Circle.create({
+        name: 'General other board circle',
+        description: 'Parent other board circle'
+    });
+
     circles.membersCircle = await Circle.create({
         name: 'General members circle',
         description: 'Parent members circle'
@@ -103,13 +108,76 @@ async function createCircles() {
         description: 'Parent admin circle'
     });
 
+    circles.comiteDirecteurCircle = await Circle.create({
+        name: 'Comite Directeur',
+        description: 'Comite Directeur circle',
+        parent_circle_id: circles.otherBoardCircle.id,
+    });
+
+    circles.networkDirectorCircle = await Circle.create({
+        name: 'Network Director',
+        description: 'Network Director circle'
+    });
+
+    circles.financialDirectorCircle = await Circle.create({
+        name: 'Financial Director',
+        description: 'Financial Director circle'
+    });
+
+    circles.suctCircle = await Circle.create({
+        name: 'Summer University Coordination Team',
+        description: 'Summer University Coordination Team circle',
+        parent_circle_id: circles.otherBoardCircle.id,
+    });
+
+    circles.eqacCircle = await Circle.create({
+        name: 'Events Quality Assurance Committee',
+        description: 'Events Quality Assurance Committee circle',
+        parent_circle_id: circles.otherBoardCircle.id,
+    });
+
+    circles.chairCircle = await Circle.create({
+        name: 'Chair Team',
+        description: 'Chair Team circle',
+        parent_circle_id: circles.otherBoardCircle.id,
+    });
+
+    circles.jcCircle = await Circle.create({
+        name: 'Juridical Commission',
+        description: 'Juridical Commission circle',
+        parent_circle_id: circles.otherBoardCircle.id,
+    });
+
+    circles.netcomCircle = await Circle.create({
+        name: 'Network Commission',
+        description: 'Network Commission circle',
+        parent_circle_id: circles.otherBoardCircle.id,
+    });
+
     for (const body of data.bodies) {
-        const boardCircle = await Circle.create({
-            name: `Board ${body.name}`,
-            description: `Board ${body.name}`,
-            parent_circle_id: circles.boardCircle.id,
-            body_id: body.id
-        });
+        if (['antenna', 'contact antenna', 'contact'].includes(body.type)) {
+            const boardCircle = await Circle.create({
+                name: `Board ${body.name}`,
+                description: `Board ${body.name}`,
+                parent_circle_id: circles.boardCircle.id,
+                body_id: body.id
+            });
+
+            circles.board.push(boardCircle);
+
+            if (body.type === 'antenna') {
+                circles.antennaBoardCircle = boardCircle;
+            }
+        } else {
+            const otherBoardCircle = await Circle.create({
+                name: `Board ${body.name}`,
+                description: `Board ${body.name}`,
+                parent_circle_id: circles.boardCircle.id,
+                body_id: body.id
+            });
+
+            circles.board.push(otherBoardCircle);
+        }
 
         const membersCircle = await Circle.create({
             name: `Members ${body.name}`,
@@ -120,12 +188,10 @@ async function createCircles() {
 
         await body.update({ shadow_circle_id: membersCircle.id });
 
-        circles.board.push(boardCircle);
         circles.members.push(membersCircle);
 
         if (body.type === 'antenna') {
             circles.antennaMembersCircle = membersCircle;
-            circles.antennaBoardCircle = boardCircle;
         }
     }
 
