@@ -135,6 +135,189 @@ async function createCircles() {
 async function createPermissions() {
     const permissions = {};
 
+    permissions.missing = await Permission.bulkCreate([
+        {
+            action: 'apply',
+            object: 'summeruniversity',
+            scope: 'global',
+            description: 'This permissions allows members to apply for Summer Universities within the application period'
+        },
+        {
+            action: 'approve_event',
+            object: 'summeruniversity',
+            scope: 'global',
+            description: 'Approve/publish Summer Universities.'
+        },
+        {
+            action: 'approve_members',
+            object: 'summeruniversity',
+            scope: 'global',
+            description: 'Approve members for a local/manage memberslists for SUs'
+        },
+        {
+            action: 'approve_summeruniversity',
+            object: 'pilot',
+            scope: 'global',
+            description: 'Permission for approving pilot SUs by SUCT'
+        },
+        {
+            action: 'approve_summeruniversity',
+            object: 'regular',
+            scope: 'global',
+            description: 'Permission for approving regular SUs by SUCT'
+        },
+        {
+            action: 'create_member',
+            object: 'body',
+            scope: 'global',
+            description: 'Creates a member to a body that this permission was granted in'
+        },
+        {
+            action: 'create',
+            object: 'circle',
+            scope: 'global',
+            description: 'Creating new free circles'
+        },
+        {
+            action: 'create',
+            object: 'payment',
+            scope: 'global',
+            description: 'Create payments globally'
+        },
+        {
+            action: 'create',
+            object: 'summeruniversity',
+            scope: 'global',
+            description: 'Allows members to create a Summer University event'
+        },
+        {
+            action: 'delete',
+            object: 'member',
+            scope: 'global',
+            description: 'Remove an account from the system. Don\'t assign this as any member can delete his own account anyways.'
+        },
+        {
+            action: 'delete',
+            object: 'payment',
+            scope: 'global',
+            description: 'Adds ability to delete payments'
+        },
+        {
+            action: 'edit',
+            object: 'su_fee',
+            scope: 'global',
+            description: 'Allows SUCT to edit fees of a SU after the first submission'
+        },
+        {
+            action: 'edit',
+            object: 'su_type',
+            scope: 'global',
+            description: 'Allows SUCT to change SUs into a pilot SU'
+        },
+        {
+            action: 'mail',
+            object: 'member',
+            scope: 'global',
+            description: 'Access notification emails of all members'
+        },
+        {
+            action: 'manage_incoming',
+            object: 'spm',
+            scope: 'global',
+            description: 'for managing incoming on SPM'
+        },
+        {
+            action: 'manage_juridical',
+            object: 'agora',
+            scope: 'global',
+            description: 'See JC list and change \'registered\' and \'departed\' attributes only.'
+        },
+        {
+            action: 'manage_summeruniversity',
+            object: 'pilot',
+            scope: 'global',
+            description: 'Permission to manage pilot SUs by SUCT'
+        },
+        {
+            action: 'manage_summeruniversity',
+            object: 'regular',
+            scope: 'global',
+            description: 'Permission to manage regular SUs by SUCT'
+        },
+        {
+            action: 'search',
+            object: 'member',
+            scope: 'global',
+            description: 'Searching members to add them to a body'
+        },
+        {
+            action: 'see_question_lines',
+            object: 'agora',
+            scope: 'global',
+            description: 'This permission allows people to see the question lines of Agorae.'
+        },
+        {
+            action: 'update_active',
+            object: 'user',
+            scope: 'global',
+            description: 'Allows to suspend or activate any user in the system'
+        },
+        {
+            action: 'update',
+            object: 'payment',
+            scope: 'global',
+            description: 'Allows updating of payments'
+        },
+        {
+            action: 'view_deleted',
+            object: 'body',
+            scope: 'global',
+            description: 'View deleted bodies listing and their page.'
+        },
+        {
+            action: 'view_unconfirmed',
+            object: 'member',
+            scope: 'global',
+            description: 'View unconfirmed members'
+        },
+        {
+            action: 'add_member',
+            object: 'body',
+            scope: 'local',
+            description: 'For board members to add existing MyAEGEE users to their body'
+        },
+        {
+            action: 'approve_event',
+            object: 'summeruniversity',
+            scope: 'local',
+            description: '-'
+        },
+        {
+            action: 'approve_members',
+            object: 'summeruniversity',
+            scope: 'local',
+            description: '-'
+        },
+        {
+            action: 'create_member',
+            object: 'body',
+            scope: 'local',
+            description: 'Creates a member to the local that this permission was granted in'
+        },
+        {
+            action: 'create',
+            object: 'circle',
+            scope: 'local',
+            description: 'Creating circles to the body the permission was granted in. Instead of creating a bound_circle, this permission is used in the new core'
+        },
+        {
+            action: 'update_active',
+            object: 'user',
+            scope: 'local',
+            description: 'Allows to suspend or activate users that are member in the body that you got this permission from'
+        }
+    ]);
+
     permissions.members = await Permission.bulkCreate([{
         scope: 'global',
         object: 'circle',
@@ -173,7 +356,16 @@ async function createPermissions() {
             scope: 'local',
             object: 'body',
             action: 'update',
-            description: 'Update details of the body that you got the permission from. Might be good for boards, as long as name and legacy key are filtered.'
+            description: 'Update details of the body that you got the permission from. Might be good for boards, as long as name and legacy key are filtered.',
+            filters: [
+                'description',
+                'phone',
+                'address',
+                'email',
+                'task_description',
+                'postal_address',
+                'website'
+            ],
         },
         {
             scope: 'local',
@@ -269,7 +461,7 @@ async function createPermissions() {
             scope: 'local',
             object: 'payment',
             action: 'view',
-            description: "View payments for the body you've got this permission from."
+            description: 'View payments for the body you\'ve got this permission from.'
         },
         {
             scope: 'local',
@@ -664,13 +856,13 @@ async function createPermissions() {
             action: 'update',
             object: 'member',
             scope: 'global',
-            description: "Update any member in the system. Don't assign this as any member can update his own profile anyways."
+            description: 'Update any member in the system. Don\'t assign this as any member can update his own profile anyways.'
         },
         {
             action: 'update',
             object: 'member',
             scope: 'local',
-            description: "Update any member in the body you got this permission from. Notice that member information is global and several bodies might have the permission to access the same member. Also don't assign it when not necessary, the member can update his own profile anyways."
+            description: 'Update any member in the body you got this permission from. Notice that member information is global and several bodies might have the permission to access the same member. Also don\'t assign it when not necessary, the member can update his own profile anyways.'
         },
         {
             action: 'view',
@@ -700,7 +892,7 @@ async function createPermissions() {
             action: 'create',
             object: 'permission',
             scope: 'global',
-            description: "Create new permission objects which haven't been in the system yet, usually only good for microservices"
+            description: 'Create new permission objects which haven\'t been in the system yet, usually only good for microservices'
         },
         {
             action: 'delete',
