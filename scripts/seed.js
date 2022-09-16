@@ -316,7 +316,7 @@ async function createPermissions() {
             scope: 'local',
             description: 'Allows to suspend or activate users that are member in the body that you got this permission from'
         }
-    ]);
+    ], { individualHooks: true, validate: true });
 
     permissions.members = await Permission.bulkCreate([{
         scope: 'global',
