@@ -191,10 +191,6 @@ async function createCircles() {
         await body.update({ shadow_circle_id: membersCircle.id });
 
         circles.members.push(membersCircle);
-
-        if (body.type === 'antenna') {
-            circles.antennaMembersCircle = membersCircle;
-        }
     }
 
     return circles;
