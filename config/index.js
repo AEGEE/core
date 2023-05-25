@@ -14,6 +14,10 @@ const config = {
             url: 'http://mailer',
             port: 4000
         },
+        gsuiteWrapper: {
+            url: 'http://gsuite-wrapper',
+            port: 8084
+        },
         logger: {
             silent: false,
             level: process.env.LOGLEVEL || 'info'
