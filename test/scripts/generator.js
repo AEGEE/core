@@ -97,8 +97,8 @@ exports.createCampaign = (options = {}) => {
 
 exports.generatePermission = (options = {}) => {
     if (notSet(options.scope)) options.scope = 'global';
-    if (notSet(options.action)) options.action = faker.string.alphanumeric(16);
-    if (notSet(options.object)) options.object = faker.string.alphanumeric(16);
+    if (notSet(options.action)) options.action = faker.string.alphanumeric({ length: 16, casing: 'lower' });
+    if (notSet(options.object)) options.object = faker.string.alphanumeric({ length: 16, casing: 'lower' });
     if (notSet(options.description)) options.description = faker.lorem.paragraph();
 
     return options;
