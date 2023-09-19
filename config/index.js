@@ -37,7 +37,11 @@ const config = {
             'bugsnag_key',
             'cookie'
         ],
-        bugsnag_key: process.env.BUGSNAG_KEY_CORE || 'CHANGEME'
+        bugsnag_key: process.env.BUGSNAG_KEY || 'CHANGEME',
+        featureflag_url: process.env.FEATUREFLAG_URL || 'CHANGEME',
+        featureflag_token: process.env.FEATUREFLAG_TOKEN || 'CHANGEME',
+        flagsmith_token: process.env.FLAGSMITH_TOKEN || 'CHANGEME',
+        devcycle_token: process.env.DEVCYCLE_TOKEN || 'CHANGEME',
     },
     development: {
 

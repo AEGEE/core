@@ -30,6 +30,14 @@ services:
             HOST: "${SUBDOMAIN_FRONTEND}${BASE_URL}"
             CORE_LOGIN: "${CORE_LOGIN}"
             CORE_PASSWORD: "${CORE_PASSWORD}"
+            LOGLEVEL: "warn"
+            # it's gonna be one of those three offerings in the end
+            # NB: all are selfhosted except there's no trace of devcycle docker.
+            # maybe they removed the offering
+            FEATUREFLAG_URL: "${FEATUREFLAG_URL}"
+            FEATUREFLAG_TOKEN: "${FEATUREFLAG_TOKEN}"
+            FLAGSMITH_TOKEN: "${FLAGSMITH_TOKEN}"
+            DEVCYCLE_TOKEN: "${DEVCYCLE_TOKEN}"
         healthcheck:
             test: ["CMD", "curl", "-f", "http://localhost:8084/healthcheck"]
             interval: 30s
