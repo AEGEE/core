@@ -334,6 +334,6 @@ exports.subscribeListserv = async (req, res) => {
 
     return res.json({
         success: true,
-        message: `Check your email to confirm your subscription to ${mailinglists.join(', ')}.`
+        message: `Request for subscribing to ${mailinglists.join(', ')} has been sent.`
     });
 };

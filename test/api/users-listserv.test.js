@@ -135,7 +135,7 @@ describe('User subscribe listserv', () => {
         expect(res.body.success).toEqual(true);
         expect(res.body).not.toHaveProperty('errors');
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toEqual('Check your email to confirm your subscription to ANNOUNCE-L.');
+        expect(res.body.message).toEqual('Request for subscribing to ANNOUNCE-L has been sent.');
     });
 
     test('should succeed for multiple mailinglists if everything is okay', async () => {
@@ -155,7 +155,7 @@ describe('User subscribe listserv', () => {
         expect(res.body.success).toEqual(true);
         expect(res.body).not.toHaveProperty('errors');
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toEqual('Check your email to confirm your subscription to ANNOUNCE-L, AEGEE-L, AEGEE-NEWS-L.');
+        expect(res.body.message).toEqual('Request for subscribing to ANNOUNCE-L, AEGEE-L, AEGEE-NEWS-L has been sent.');
     });
 
     test('should work for current user for /me without permission', async () => {
