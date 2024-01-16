@@ -148,14 +148,14 @@ describe('User subscribe listserv', () => {
             uri: '/members/' + user.id + '/listserv',
             method: 'POST',
             headers: { 'X-Auth-Token': token.value },
-            body: { mailinglists: ['announce-l, AEGEE-L, AeGeE-NeWs-L'] }
+            body: { mailinglists: ['announce-l, AEGEE-L, AeGeEnEwS-l'] }
         });
 
         expect(res.statusCode).toEqual(200);
         expect(res.body.success).toEqual(true);
         expect(res.body).not.toHaveProperty('errors');
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toEqual('Request for subscribing to ANNOUNCE-L, AEGEE-L, AEGEE-NEWS-L has been sent.');
+        expect(res.body.message).toEqual('Request for subscribing to ANNOUNCE-L, AEGEE-L, AEGEENEWS-L has been sent.');
     });
 
     test('should work for current user for /me without permission', async () => {
