@@ -59,7 +59,7 @@ describe('User subscribe listserv', () => {
         expect(res.body).toHaveProperty('message');
     });
 
-    test('should fail if there mailinglists is not an array', async () => {
+    test('should fail if mailinglists is not an array', async () => {
         const user = await generator.createUser({ superadmin: true });
         const token = await generator.createAccessToken(user);
 
@@ -78,7 +78,7 @@ describe('User subscribe listserv', () => {
         expect(res.body).toHaveProperty('message');
     });
 
-    test('should fail if there mailinglists is an empty array', async () => {
+    test('should fail if mailinglists is an empty array', async () => {
         const user = await generator.createUser({ superadmin: true });
         const token = await generator.createAccessToken(user);
 
@@ -95,6 +95,25 @@ describe('User subscribe listserv', () => {
         expect(res.body.success).toEqual(false);
         expect(res.body).not.toHaveProperty('data');
         expect(res.body).toHaveProperty('message');
+    });
+
+    test('should fail if mailinglists includes invalid mailing lists', async () => {
+        const user = await generator.createUser({ superadmin: true });
+        const token = await generator.createAccessToken(user);
+
+        await generator.createPermission({ scope: 'global', action: 'subscribe', object: 'listserv' });
+
+        const res = await request({
+            uri: '/members/' + user.id + '/listserv',
+            method: 'POST',
+            headers: { 'X-Auth-Token': token.value },
+            body: { mailinglists: ['ANNOUNCE-L', 'BOARDINF-L'] }
+        });
+
+        expect(res.statusCode).toEqual(422);
+        expect(res.body.success).toEqual(false);
+        expect(res.body).not.toHaveProperty('data');
+        expect(res.body.message).toEqual('Mailinglists must be one of the following: AEGEE-L, AEGEENEWS-L, ANNOUNCE-L, AEGEE-EVENT-L.');
     });
 
     test('should fail if mailer fails', async () => {
