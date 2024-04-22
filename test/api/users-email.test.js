@@ -67,12 +67,31 @@ describe('Users list', () => {
         expect(res.body.data[0].id).toEqual(user.id);
     });
 
+    test('should fail with local permission', async () => {
+        const user = await generator.createUser({ superadmin: true });
+        const secondUser = await generator.createUser();
+        const token = await generator.createAccessToken(user);
+
+        await generator.createPermission({ scope: 'local', action: 'view_email', object: 'member' });
+
+        const res = await request({
+            uri: '/members_email?query=' + secondUser.id,
+            method: 'GET',
+            headers: { 'X-Auth-Token': token.value }
+        });
+
+        expect(res.statusCode).toEqual(403);
+        expect(res.body.success).toEqual(false);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body).not.toHaveProperty('data');
+    });
+
     test('should find one by id', async () => {
         const user = await generator.createUser({ superadmin: true });
         const secondUser = await generator.createUser();
         const token = await generator.createAccessToken(user);
 
-        await generator.createPermission({ scope: 'global', action: 'mail', object: 'member' });
+        await generator.createPermission({ scope: 'global', action: 'view_email', object: 'member' });
 
         const res = await request({
             uri: '/members_email?query=' + secondUser.id,
@@ -94,7 +113,7 @@ describe('Users list', () => {
         const secondUser = await generator.createUser();
         const token = await generator.createAccessToken(user);
 
-        await generator.createPermission({ scope: 'global', action: 'mail', object: 'member' });
+        await generator.createPermission({ scope: 'global', action: 'view_email', object: 'member' });
 
         const res = await request({
             uri: '/members_email?query=' + user.id + ',' + secondUser.id,
@@ -116,7 +135,7 @@ describe('Users list', () => {
         const user = await generator.createUser({ superadmin: true });
         const token = await generator.createAccessToken(user);
 
-        await generator.createPermission({ scope: 'global', action: 'mail', object: 'member' });
+        await generator.createPermission({ scope: 'global', action: 'view_email', object: 'member' });
 
         const res = await request({
             uri: '/members_email?query=a,b',
@@ -134,7 +153,7 @@ describe('Users list', () => {
         const user = await generator.createUser({ superadmin: true });
         const token = await generator.createAccessToken(user);
 
-        await generator.createPermission({ scope: 'global', action: 'mail', object: 'member' });
+        await generator.createPermission({ scope: 'global', action: 'view_email', object: 'member' });
 
         const res = await request({
             uri: '/members_email?query=' + user.id,

@@ -100,8 +100,8 @@ exports.getUsersEmail = async (req, res) => {
 
     const userIds = req.query.query.split(',');
 
-    if (!req.permissions.hasPermission('global:mail:member') && Number(userIds[0]) !== req.user.id) {
-        return errors.makeForbiddenError(res, 'Permission global:mail:member is required, but not present.');
+    if (!req.permissions.hasPermission('global:view_email:member') && Number(userIds[0]) !== req.user.id) {
+        return errors.makeForbiddenError(res, 'Permission global:view_email:member is required, but not present.');
     }
 
     const where = { id: { [Sequelize.Op.or]: userIds } };
