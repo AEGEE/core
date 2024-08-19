@@ -456,6 +456,12 @@ async function createPermissions() {
             scope: 'local',
             description: '-'
         },
+        {
+            action: 'manage_network',
+            object: 'boards',
+            scope: 'local',
+            description: 'Manage boards of a local'
+        }
     ], { individualHooks: true, validate: true });
 
     permissions.board = [...otherBoardPermissions, ...boardPermissions];
@@ -533,6 +539,12 @@ async function createPermissions() {
     },
     {
         action: 'manage_network',
+        object: 'boards',
+        scope: 'global',
+        description: 'Manage boards of all locals'
+    },
+    {
+        action: 'manage_network',
         object: 'antenna_criteria',
         scope: 'global',
         description: 'Manage the Antenna Criteria fulfilment of Locals'
@@ -543,7 +555,7 @@ async function createPermissions() {
         scope: 'global',
         description: 'Set the fulfilment of the `communication` Antenna Criterion'
     }
-], { individualHooks: true, validate: true });
+    ], { individualHooks: true, validate: true });
 
     permissions.netCom = [...netComPermissions, permissions.viewMembersCircle, permissions.addMemberCircle];
 
@@ -564,7 +576,8 @@ async function createPermissions() {
         object: 'communication_exception',
         scope: 'global',
         description: 'Give exceptions to the `communication` Antenna Criterion'
-    },{
+    },
+    {
         action: 'manage_network',
         object: 'board_election',
         scope: 'global',
