@@ -247,7 +247,7 @@ async function createPermissions() {
         scope: 'global',
         description: 'Add anyone to any circle in the system, no matter if the circle is joinable or not but still respecting that bound circles can only hold members of the same body. This also allows to add yourself to any circle and thus can be used for a privilege escalation'
     });
-    permissions.manageAntennaCritera = await Permission.create({
+    permissions.manageAntennaCriteria = await Permission.create({
         action: 'manage_network',
         object: 'antenna_criteria',
         scope: 'global',
@@ -557,7 +557,7 @@ async function createPermissions() {
     }
     ], { individualHooks: true, validate: true });
 
-    permissions.netCom = [...netComPermissions, permissions.viewMembersCircle, permissions.addMemberCircle, permissions.seeMemberslistsAgora, permissions.manageAntennaCritera];
+    permissions.netCom = [...netComPermissions, permissions.viewMembersCircle, permissions.addMemberCircle, permissions.seeMemberslistsAgora, permissions.manageAntennaCriteria];
 
     const networkDirectorPermissions = await Permission.bulkCreate([{
         action: 'view_deleted',
@@ -614,7 +614,7 @@ async function createPermissions() {
         description: 'Set the fulfilment of the `fulfilment report` Antenna Criterion'
     }], { individualHooks: true, validate: true });
 
-    permissions.networkDirector = [...networkDirectorPermissions, ...permissions.netCom, permissions.seeMemberslistsAgora, permissions.setMemberslistsFeePaidAgora];
+    permissions.networkDirector = [...networkDirectorPermissions, ...permissions.netCom, permissions.setMemberslistsFeePaidAgora];
 
     const financialDirectorPermissions = await Permission.bulkCreate([{
         action: 'manage_network',
@@ -623,7 +623,7 @@ async function createPermissions() {
         description: 'Set the fulfilment of the `membership fee` Antenna Criterion'
     }], { individualHooks: true, validate: true });
 
-    permissions.financialDirector = [...financialDirectorPermissions, permissions.seeMemberslistsAgora, permissions.setMemberslistsFeePaidAgora, permissions.manageAntennaCritera];
+    permissions.financialDirector = [...financialDirectorPermissions, permissions.seeMemberslistsAgora, permissions.setMemberslistsFeePaidAgora, permissions.manageAntennaCriteria];
 
     const suctPermissions = await Permission.bulkCreate([{
         action: 'edit',
