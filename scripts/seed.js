@@ -84,7 +84,7 @@ async function createBodies() {
         name: 'Network Commission',
         code: 'XNE',
         description: 'Network Commission',
-        type: 'Commission',
+        type: 'commission',
         phone: '1-800-111-11-11',
         address: 'Somewhere in Europe',
         founded_at: '1970-01-01',
@@ -246,6 +246,12 @@ async function createPermissions() {
         object: 'circle',
         scope: 'global',
         description: 'Add anyone to any circle in the system, no matter if the circle is joinable or not but still respecting that bound circles can only hold members of the same body. This also allows to add yourself to any circle and thus can be used for a privilege escalation'
+    });
+    permissions.manageAntennaCritera = await Permission.create({
+        action: 'manage_network',
+        object: 'antenna_criteria',
+        scope: 'global',
+        description: 'Manage the Antenna Criteria fulfilment of Locals'
     });
 
     permissions.members = await Permission.bulkCreate([{
@@ -545,19 +551,13 @@ async function createPermissions() {
     },
     {
         action: 'manage_network',
-        object: 'antenna_criteria',
-        scope: 'global',
-        description: 'Manage the Antenna Criteria fulfilment of Locals'
-    },
-    {
-        action: 'manage_network',
         object: 'communication',
         scope: 'global',
         description: 'Set the fulfilment of the `communication` Antenna Criterion'
     }
     ], { individualHooks: true, validate: true });
 
-    permissions.netCom = [...netComPermissions, permissions.viewMembersCircle, permissions.addMemberCircle];
+    permissions.netCom = [...netComPermissions, permissions.viewMembersCircle, permissions.addMemberCircle, permissions.seeMemberslistsAgora, permissions.manageAntennaCritera];
 
     const networkDirectorPermissions = await Permission.bulkCreate([{
         action: 'view_deleted',
@@ -618,18 +618,12 @@ async function createPermissions() {
 
     const financialDirectorPermissions = await Permission.bulkCreate([{
         action: 'manage_network',
-        object: 'antenna_criteria',
-        scope: 'global',
-        description: 'Manage the Antenna Criteria fulfilment of Locals'
-    },
-    {
-        action: 'manage_network',
         object: 'membership_fee',
         scope: 'global',
         description: 'Set the fulfilment of the `membership fee` Antenna Criterion'
     }], { individualHooks: true, validate: true });
 
-    permissions.financialDirector = [...financialDirectorPermissions, permissions.seeMemberslistsAgora, permissions.setMemberslistsFeePaidAgora];
+    permissions.financialDirector = [...financialDirectorPermissions, permissions.seeMemberslistsAgora, permissions.setMemberslistsFeePaidAgora, permissions.manageAntennaCritera];
 
     const suctPermissions = await Permission.bulkCreate([{
         action: 'edit',
@@ -1374,6 +1368,11 @@ async function createMembers() {
     });
 
     await BodyMembership.create({
+        body_id: antenna.id,
+        user_id: netcomMember.id
+    });
+
+    await BodyMembership.create({
         body_id: netcom.id,
         user_id: netcomMember.id
     });
@@ -1394,6 +1393,11 @@ async function createMembers() {
         gender: 'neutral',
         address: 'Somewhere in Europe',
         mail_confirmed_at: new Date()
+    });
+
+    await BodyMembership.create({
+        body_id: antenna.id,
+        user_id: ndMember.id
     });
 
     await CircleMembership.create({
