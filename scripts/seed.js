@@ -281,6 +281,11 @@ async function createPermissions() {
         object: 'event',
         description: 'Display links to \'Create event\' everywhere, so people who are not members of any body cannot see it.',
         action: 'create'
+    }, {
+        scope: 'global',
+        object: 'board',
+        description: 'View boards of a body',
+        action: 'view'
     }], { individualHooks: true, validate: true });
 
     const otherBoardPermissions = await Permission.bulkCreate([
@@ -546,6 +551,12 @@ async function createPermissions() {
         description: 'View join requests to any body in the system. This could disclose a bigger portion of the members database and thus should be assigned carefully'
     },
     {
+        action: 'see_missing_memberslists',
+        object: 'agora',
+        scope: 'global',
+        description: 'See all missing memberslists for Agora'
+    },
+    {
         action: 'manage_network',
         object: 'boards',
         scope: 'global',
@@ -556,6 +567,12 @@ async function createPermissions() {
         object: 'communication',
         scope: 'global',
         description: 'Set the fulfilment of the `communication` Antenna Criterion'
+    },
+    {
+        action: 'manage_network',
+        object: 'netcom_assignment',
+        scope: 'global',
+        description: 'Set the assignment of NetCom to body'
     }
     ], { individualHooks: true, validate: true });
 
@@ -614,6 +631,12 @@ async function createPermissions() {
         object: 'fulfilment_report',
         scope: 'global',
         description: 'Set the fulfilment of the `fulfilment report` Antenna Criterion'
+    },
+    {
+        action: 'manage_network',
+        object: 'fulfilment_email',
+        scope: 'global',
+        description: 'Send Antenna Criteria fulfilment email to Locals'
     }], { individualHooks: true, validate: true });
 
     permissions.networkDirector = [...networkDirectorPermissions, ...permissions.netCom, permissions.setMemberslistsFeePaidAgora];
