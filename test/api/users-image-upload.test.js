@@ -13,13 +13,11 @@ describe('Users image upload', () => {
 
     beforeEach(async () => {
         user = await generator.createUser();
-        mock.mockAll();
         await startServer();
     });
 
     afterEach(async () => {
         await stopServer();
-        mock.cleanAll();
 
         await generator.clearAll();
         rimraf(config.media_dir);
