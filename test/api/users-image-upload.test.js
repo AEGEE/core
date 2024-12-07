@@ -208,6 +208,13 @@ describe('Users image upload', () => {
         });
 
         expect(res.statusCode).toEqual(200);
+        expect(res.body.success).toEqual(true);
+        expect(res.body).toHaveProperty('message');
+
+        const userFromDb = await User.findByPk(user.id);
+
+        const imgPath = path.join(__dirname, '..', '..', config.media_dir, 'headimages', userFromDb.image);
+        expect(fs.existsSync(imgPath)).toEqual(true);
 
         const adminFromDb = await User.findByPk(admin.id);
 
