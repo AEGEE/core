@@ -4,7 +4,6 @@ const { rimraf } = require('rimraf');
 
 const { startServer, stopServer } = require('../../lib/server');
 const { request } = require('../scripts/helpers');
-const mock = require('../scripts/mock-core-registry');
 const generator = require('../scripts/generator');
 const { User } = require('../../models');
 const config = require('../../config');

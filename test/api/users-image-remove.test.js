@@ -4,7 +4,6 @@ const { rimraf } = require('rimraf');
 
 const { startServer, stopServer } = require('../../lib/server');
 const { request } = require('../scripts/helpers');
-const mock = require('../scripts/mock-core-registry');
 const generator = require('../scripts/generator');
 const { User } = require('../../models');
 const config = require('../../config');
@@ -26,7 +25,7 @@ describe('Users image upload', () => {
         rimraf(config.media_dir);
     });
 
-    it ('should remove a file', async () => {
+    it('should remove a file', async () => {
         const res = await request({
             uri: '/members/' + user.id + '/image',
             method: 'DELETE',
@@ -41,5 +40,5 @@ describe('Users image upload', () => {
 
         const oldImgPath = path.join(__dirname, '..', '..', config.media_dir, 'headimages', userFromDb.image);
         expect(fs.existsSync(oldImgPath)).toEqual(false);
-    })
+    });
 });
