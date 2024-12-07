@@ -102,6 +102,8 @@ describe('Users image remove', () => {
 
         expect(secondRequest.statusCode).toEqual(200);
 
+        let userFromDb = await User.findByPk(user.id);
+
         const res = await request({
             uri: '/members/' + user.id + '/image',
             method: 'DELETE',
@@ -109,6 +111,14 @@ describe('Users image remove', () => {
         });
 
         expect(res.statusCode).toEqual(200);
+        expect(res.body.success).toEqual(true);
+        expect(res.body).toHaveProperty('message');
+
+        const oldImgPath = path.join(__dirname, '..', '..', config.media_dir, 'headimages', userFromDb.image);
+        expect(fs.existsSync(oldImgPath)).toEqual(false);
+
+        userFromDb = await User.findByPk(user.id);
+        expect(userFromDb.image).toEqual(null);
 
         const adminFromDb = await User.findByPk(admin.id);
 
