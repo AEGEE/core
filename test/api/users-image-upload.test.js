@@ -9,27 +9,27 @@ const { User } = require('../../models');
 const config = require('../../config');
 
 describe('Users image upload', () => {
-    let user;
-
-    beforeEach(async () => {
-        user = await generator.createUser();
+    beforeAll(async () => {
         await startServer();
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await stopServer();
+    });
 
+    afterEach(async () => {
         await generator.clearAll();
         rimraf(config.media_dir);
     });
 
     it('should create an upload folder if it doesn\'t exist', async () => {
-        rimraf(config.media_dir);
+        const user = await generator.createUser({ superadmin: true });
+        const token = await generator.createAccessToken(user);
 
         await request({
             uri: '/members/' + user.id + '/upload',
             method: 'POST',
-            headers: { 'X-Auth-Token': 'blablabla' },
+            headers: { 'X-Auth-Token': token.value },
             formData: {
                 head_image: fs.createReadStream('./test/assets/valid_image.png')
             }
@@ -39,10 +39,13 @@ describe('Users image upload', () => {
     });
 
     it('should fail if the uploaded file is not an image (by extension)', async () => {
+        const user = await generator.createUser({ superadmin: true });
+        const token = await generator.createAccessToken(user);
+
         const res = await request({
             uri: '/members/' + user.id + '/upload',
             method: 'POST',
-            headers: { 'X-Auth-Token': 'blablabla' },
+            headers: { 'X-Auth-Token': token.value },
             formData: {
                 head_image: fs.createReadStream('./test/assets/invalid_image.txt')
             }
@@ -55,10 +58,13 @@ describe('Users image upload', () => {
     });
 
     it('should fail if the uploaded file is not an image (by content)', async () => {
+        const user = await generator.createUser({ superadmin: true });
+        const token = await generator.createAccessToken(user);
+
         const res = await request({
             uri: '/members/' + user.id + '/upload',
             method: 'POST',
-            headers: { 'X-Auth-Token': 'blablabla' },
+            headers: { 'X-Auth-Token': token.value },
             formData: {
                 head_image: {
                     value: fs.createReadStream('./test/assets/invalid_image.txt'),
@@ -76,10 +82,13 @@ describe('Users image upload', () => {
     });
 
     it('should fail the \'head_image\' field is not specified', async () => {
+        const user = await generator.createUser({ superadmin: true });
+        const token = await generator.createAccessToken(user);
+
         const res = await request({
             uri: '/members/' + user.id + '/upload',
             method: 'POST',
-            headers: { 'X-Auth-Token': 'blablabla' },
+            headers: { 'X-Auth-Token': token.value },
             formData: {}
         });
 
@@ -90,10 +99,13 @@ describe('Users image upload', () => {
     });
 
     it('should upload a file if it\'s valid', async () => {
+        const user = await generator.createUser({ superadmin: true });
+        const token = await generator.createAccessToken(user);
+
         const res = await request({
             uri: '/members/' + user.id + '/upload',
             method: 'POST',
-            headers: { 'X-Auth-Token': 'blablabla' },
+            headers: { 'X-Auth-Token': token.value },
             formData: {
                 head_image: fs.createReadStream('./test/assets/valid_image.png')
             }
@@ -110,10 +122,13 @@ describe('Users image upload', () => {
     });
 
     it('should upload a file if it\'s valid, but has extension in capital letters', async () => {
+        const user = await generator.createUser({ superadmin: true });
+        const token = await generator.createAccessToken(user);
+
         const res = await request({
             uri: '/members/' + user.id + '/upload',
             method: 'POST',
-            headers: { 'X-Auth-Token': 'blablabla' },
+            headers: { 'X-Auth-Token': token.value },
             formData: {
                 head_image: fs.createReadStream('./test/assets/valid_second_image.PNG')
             }
@@ -130,11 +145,14 @@ describe('Users image upload', () => {
     });
 
     it('should remove the old file', async () => {
+        const user = await generator.createUser({ superadmin: true });
+        const token = await generator.createAccessToken(user);
+
         // Uploading
         const firstRequest = await request({
             uri: '/members/' + user.id + '/upload',
             method: 'POST',
-            headers: { 'X-Auth-Token': 'blablabla' },
+            headers: { 'X-Auth-Token': token.value },
             formData: {
                 head_image: fs.createReadStream('./test/assets/valid_image.png')
             }
@@ -147,7 +165,7 @@ describe('Users image upload', () => {
         const res = await request({
             uri: '/members/' + user.id + '/upload',
             method: 'POST',
-            headers: { 'X-Auth-Token': 'blablabla' },
+            headers: { 'X-Auth-Token': token.value },
             formData: {
                 head_image: fs.createReadStream('./test/assets/valid_image.png')
             }
