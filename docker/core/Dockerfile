@@ -1,5 +1,5 @@
 # FIXME use alpine
-FROM node:20.18.1@sha256:48ca2016597303600e8ff125a42aa3fc7a08325da6615c89dc4cddf156bded6f
+FROM node:22.13.1@sha256:ae2f3d4cc65d251352eca01ba668824f651a2ee4d2a37e2efb22649521a483fd
 
 RUN mkdir -p /usr/app/src \
 	&& mkdir -p /usr/app/media \
