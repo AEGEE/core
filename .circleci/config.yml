@@ -9,7 +9,7 @@ jobs:
   test:
     docker:
       - image: cimg/node:22.18.0
-      - image: cimg/postgres:17.5.0
+      - image: cimg/postgres:17.5
         environment:
           POSTGRES_PASSWORD: config.test.postgres.password
     parallelism: 4
@@ -31,7 +31,7 @@ jobs:
   db-recreate:
     docker:
       - image: cimg/node:22.18.0
-      - image: cimg/postgres:17.5.0
+      - image: cimg/postgres:17.5
         environment:
           POSTGRES_PASSWORD: config.test.postgres.password
     resource_class: large
