@@ -23,7 +23,7 @@
     "nyc": "^15.1.0",
     "open-cli": "^8.0.0",
     "rimraf": "^5.0.5",
-    "semantic-release": "^22.0.12"
+    "semantic-release": "^25.0.0"
   },
   "scripts": {
     "test": "NODE_ENV=test npm run db:setup && jest test/**/*.test.js --runInBand --forceExit",
